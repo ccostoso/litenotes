@@ -6,6 +6,7 @@ use App\Models\Note;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class NoteController extends Controller
 {
@@ -50,14 +51,11 @@ class NoteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Note $note)
+    public function show(Request $request, Note $note)
     {
+        $response = Gate::inspect('view-note', $note);
 
-        if ($note->user_id != Auth::id()) {
-            return abort(403);
-        }
-
-        return view('notes.show')->with('note', $note);
+        return view('notes.show')->with('note', $note)->with('response', $response);
     }
 
     /**

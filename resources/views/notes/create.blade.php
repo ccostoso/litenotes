@@ -15,7 +15,7 @@
                         type="text" 
                         name="title" 
                         field="title" 
-                        placeholder="title" 
+                        placeholder="Enter title here" 
                         class="w-full" 
                         autocomplete="off"
                         :value="@old('title')"

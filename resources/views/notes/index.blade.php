@@ -21,7 +21,9 @@
                     <span class="block mt-4 text-sm opacity-70">{{ $note->updated_at->diffForHumans() }}</span>
                 </div>
             @empty
-                <p>You currently have no notes to display. When you create a note, it will show up here.</p>
+                <div class="my-6 p-6 bg-white border-b border-gray-200 shadow-sm sm:rounded-lg">
+                    <p>You currently have no notes to display. When you create a note, it will show up here.</p>
+                </div>
             @endforelse
 
             {{-- @if (method_exists($notes, 'links')) --}}
