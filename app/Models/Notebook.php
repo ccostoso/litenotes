@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
-use App\Models\User;
-use App\Models\Notebook;
+use App\Models\Note;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Note extends Model
+class Notebook extends Model
 {
     use HasFactory;
     use SoftDeletes;
@@ -24,7 +23,7 @@ class Note extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function notebooks() {
-        return $this->belongsToMany(Notebook::class);
+    public function notes() {
+        return $this->hasMany(Note::class);
     }
 }

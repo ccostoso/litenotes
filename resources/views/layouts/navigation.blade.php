@@ -18,6 +18,9 @@
                     <x-nav-link :href="route('trashed.index')" :active="request()->routeIs('trashed.index')">
                         {{ __('Trash') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('notebooks.index')" :active="request()->routeIs('notebooks.index')">
+                        {{ __('Notebooks') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -75,6 +78,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('trashed.index')" :active="request()->routeIs('trashed.index')">
                 {{ __('Trash') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('notebooks.index')" :active="request()->routeIs('notebooks.index')">
+                {{ __('Notebooks') }}
             </x-responsive-nav-link>
         </div>
 

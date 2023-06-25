@@ -1,9 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\NotebookController;
 use App\Http\Controllers\TrashedNoteController;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,5 +39,7 @@ Route::prefix('/trashed')->name('trashed.')->middleware(['auth'])->group(functio
     Route::put('/{note}', [TrashedNoteController::class, 'update'])->name('update')->withTrashed();
     Route::delete('/{note}', [TrashedNoteController::class, 'destroy'])->name('destroy')->withTrashed();
 });
+
+Route::resource('/notebooks', NotebookController::class)->middleware(['auth']);
 
 require __DIR__.'/auth.php';

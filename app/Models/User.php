@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Note;
+use App\Models\Notebook;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -46,5 +47,9 @@ class User extends Authenticatable
 
     public function notes() {
         return $this->hasMany(Note::class);
+    }
+
+    public function notebooks() {
+        return $this->hasMany(Notebook::class);
     }
 }
