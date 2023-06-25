@@ -18,6 +18,15 @@
 
             @forelse ($notes as $note)
                 <div class="my-6 p-6 bg-white border-b border-gray-200 shadow-sm sm:rounded-lg">
+                    @if($note->is_public)
+                        <p class="opacity-70">
+                            <small>Visible to all</small>
+                        </p>
+                    @else
+                        <p class="opacity-70">
+                            <small>Private</small>
+                        </p>
+                    @endif
                     <h2 class="font-bold text-2xl">
                         <a 
                             @if(request()->routeIs('notes.index'))
