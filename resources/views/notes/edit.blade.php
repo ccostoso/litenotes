@@ -31,20 +31,17 @@
                     :value="@old('text', $note->text)"
                     ></x-textarea>
 
-                    @if($note->is_public)
-                        <p class="opacity-70">
-                            <small>Note is currently visible to all</small>
-                        </p>
-                    @else
-                        <p class="opacity-70">
-                            <small>Note is currently private</small>
-                        </p>
-                    @endif
+                    <x-visibility :is_public="$note->is_public"></x-visibility>
+
                     <div class="flex">
                         <div class="flex items-center h-5">
                             <input type="checkbox" 
                             name="is_public"
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                            @if($note->is_public)
+                                checked
+                            @endif
+                            >
                         </div>
                         <div class="ml-2 text-sm">
                             <label for="helper-checkbox" class="font-medium text-gray-900 dark:text-gray-300">Make note public</label>

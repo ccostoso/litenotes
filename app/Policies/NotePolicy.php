@@ -24,7 +24,7 @@ class NotePolicy
     {
         // dump($user);
 
-        return $note->user->is(Auth::user())
+        return $note->user->is(Auth::user()) || $note->is_public
         // $user->id === $note->user_id
             ? Response::allow()
             // : Response::denyAsNotFound('User note not found.');

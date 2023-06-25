@@ -18,28 +18,20 @@
 
             @forelse ($notes as $note)
                 <div class="my-6 p-6 bg-white border-b border-gray-200 shadow-sm sm:rounded-lg">
-                    @if($note->is_public)
-                        <p class="opacity-70">
-                            <small>Visible to all</small>
-                        </p>
-                    @else
-                        <p class="opacity-70">
-                            <small>Private</small>
-                        </p>
-                    @endif
                     <h2 class="font-bold text-2xl">
                         <a 
-                            @if(request()->routeIs('notes.index'))
-                                href="{{ route('notes.show', $note) }}"
-                            @else
-                                href="{{ route('trashed.show', $note) }}"
-                            @endif
+                        @if(request()->routeIs('notes.index'))
+                        href="{{ route('notes.show', $note) }}"
+                        @else
+                        href="{{ route('trashed.show', $note) }}"
+                        @endif
                         >{{ $note->title }}</a>
                     </h2>
                     <p class="mt-2">
                         {{ Str::limit($note->text, 200) }}
                     </p>
                     <span class="block mt-4 text-sm opacity-70">{{ $note->updated_at->diffForHumans() }}</span>
+                    <x-visibility :is_public="$note->is_public"></x-visibility>
                 </div>
             @empty
                 <div class="my-6 p-6 bg-white border-b border-gray-200 shadow-sm sm:rounded-lg">

@@ -19,19 +19,11 @@
                     @endif
                 </div>
                 <div class="my-6 p-6 bg-white border-b border-gray-200 shadow-sm sm:rounded-lg">
-                    @if($note->is_public)
-                        <p class="opacity-70">
-                            <small>Visible to all</small>
-                        </p>
-                    @else
-                        <p class="opacity-70">
-                            <small>Private</small>
-                        </p>
-                    @endif
                     <h2 class="font-bold text-4xl">
                         {{ $note->title }}
                     </h2>
-                    <p class="mt-6 whitespace-pre-wrap">{{ $note->text }}</p>
+                    <p class="mt-6 mb-3 whitespace-pre-wrap">{{ $note->text }}</p>
+                    <x-visibility :is_public="$note->is_public"></x-visibility>
                 </div>
             @else
                 <div class="my-6 p-6 bg-white border-b border-gray-200 shadow-sm sm:rounded-lg">
