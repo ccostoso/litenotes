@@ -15,7 +15,9 @@ class NoteController extends Controller
      */
     public function index()
     {
-        $notes = Note::where('user_id', Auth::id())->latest('updated_at')->paginate(15);
+        // $notes = Note::where('user_id', Auth::id())->latest('updated_at')->paginate(15);
+        // $notes = Auth::user()->notes()->latest('updated_at')->paginate(15);
+        $notes = Note::whereBelongsTo(Auth::user())->latest('updated_at')->paginate(15);
         return view('notes.index')->with('notes', $notes);
     }
 
@@ -32,15 +34,13 @@ class NoteController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
         $request->validate([
             'title' => 'required|max:250',
             'text' => 'required'
         ]);
 
-        Note::create([
+        Auth::user()->notes()->create([
             'uuid' => Str::uuid(),
-            'user_id' => Auth::id(),
             'title' => $request->title,
             'text' => $request->text
         ]);
@@ -53,32 +53,50 @@ class NoteController extends Controller
      */
     public function show(Request $request, Note $note)
     {
-        $response = Gate::inspect('view-note', $note);
+        // $request = Gate::inspect('view-note', $note);
 
-        return view('notes.show')->with('note', $note)->with('response', $response);
+        return view('notes.show')->with([
+            'note' => $note,
+            'response'=> Gate::inspect('view-note', $note)
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Note $note)
     {
-        //
+        return view('notes.edit')->with([
+            'note' => $note,
+            'response'=> Gate::inspect('view-note', $note)
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Note $note)
     {
-        //
+        $request->validate([
+            'title' => 'required|max:250',
+            'text' => 'required'
+        ]);
+
+        $note->update([
+            'title' => $request->title,
+            'text' => $request->text
+        ]);
+
+        return to_route('notes.show', $note)->with('success', 'Note updated successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Note $note)
     {
-        //
+        $note->delete();
+
+        return to_route('notes.index')->with('success', 'Note moved to Trash!');
     }
 }

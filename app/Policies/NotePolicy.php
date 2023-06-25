@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\Note;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Auth;
 
 class NotePolicy
 {
@@ -13,7 +14,7 @@ class NotePolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->id > 0;
     }
 
     /**
@@ -21,9 +22,13 @@ class NotePolicy
      */
     public function view(User $user, Note $note): Response
     {
-        return $user->id === $note->user_id
+        // dump($user);
+
+        return $note->user->is(Auth::user())
+        // $user->id === $note->user_id
             ? Response::allow()
-            : Response::deny('You do not have authorization to view this note.');
+            // : Response::denyAsNotFound('User note not found.');
+            : abort(403);
     }
 
     /**
@@ -41,7 +46,8 @@ class NotePolicy
     {
         return $user->id === $note->user_id
         ? Response::allow()
-        : Response::deny('You do not have authorization to update this note.');
+        // : Response::deny('You do not have authorization to update this note.');
+        : abort(403);
     }
 
     /**
@@ -51,7 +57,8 @@ class NotePolicy
     {
         return $user->id === $note->user_id
         ? Response::allow()
-        : Response::deny('You do not have authorization to delete this note.');
+        // : Response::deny('You do not have authorization to delete this note.');
+        : abort(403);
     }
 
     /**
@@ -61,7 +68,8 @@ class NotePolicy
     {
         return $user->id === $note->user_id
         ? Response::allow()
-        : Response::deny('You do not have authorization to restore this note.');
+        // : Response::deny('You do not have authorization to restore this note.');
+        : abort(403);
     }
 
     /**
@@ -71,6 +79,7 @@ class NotePolicy
     {
         return $user->id === $note->user_id
         ? Response::allow()
-        : Response::deny('You do not have authorization to delete this note.');
+        // : Response::deny('You do not have authorization to delete this note.');
+        : abort(403);
     }
 }
