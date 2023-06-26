@@ -6,6 +6,7 @@ use App\Models\Note;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Notebook extends Model
 {
@@ -23,7 +24,7 @@ class Notebook extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function notes() {
-        return $this->hasMany(Note::class);
+    public function notes(): BelongsToMany {
+        return $this->belongsToMany(Note::class);
     }
 }

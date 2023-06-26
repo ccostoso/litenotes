@@ -19,27 +19,25 @@
                         class="w-full" 
                         autocomplete="off"
                         :value="@old('title')"
-                        ></x-text-input>
+                    ></x-text-input>
 
-                    {{-- <x-textarea 
-                    name="text" 
-                    field="text" 
-                    rows="10" 
-                    placeholder="Start typing here..." 
+                    <x-textarea 
+                    name="description" 
+                    field="description" 
+                    rows="3" 
+                    placeholder="Give a description for this notebook" 
                     class="w-full mt-6"
-                    :value="@old('text')"
-                    ></x-textarea> --}}
+                    :value="@old('description')"
+                    ></x-textarea>
+
                     <ul role="list" class="divide-y divide-gray-100">
                         @forelse ($notes as $note)
                             <li class="flex gap-x-6 py-5">
                                     <div class="flex items-center h-5">
                                         <input type="checkbox" 
                                         name="in_notebook[]"
-                                        value="{{ $note->uuid }}"
+                                        value="{{ $note->id }}"
                                         class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                        {{-- @if($note->is_public)
-                                            checked
-                                        @endif --}}
                                         >
                                     </div>
                                     <div class="ml-2 text-sm">

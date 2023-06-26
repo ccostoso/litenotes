@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Note;
 use App\Models\Notebook;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,7 +33,13 @@ class NotebookController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        Auth::user()->notebooks()->create([
+            'uuid' => Str::uuid(),
+            'title' => $request->title,
+            'description' => $request->description
+        ])->notes()->attach($request->in_notebook);
+
+        return to_route('notebooks.index');
     }
 
     /**

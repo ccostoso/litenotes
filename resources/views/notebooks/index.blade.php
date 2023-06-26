@@ -25,7 +25,7 @@
                         @else
                         href="{{ route('trashed.show', $notebook) }}"
                         @endif
-                        >{{ $note->title }}</a>
+                        >{{ $notebook->title }}</a>
                     </h2>
                     <p class="mt-2">
                         {{ Str::limit($notebook->description, 200) }}
