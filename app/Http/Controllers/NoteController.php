@@ -15,8 +15,6 @@ class NoteController extends Controller
      */
     public function index()
     {
-        // $notes = Note::where('user_id', Auth::id())->latest('updated_at')->paginate(15);
-        // $notes = Auth::user()->notes()->latest('updated_at')->paginate(15);
         $notes = Note::whereBelongsTo(Auth::user())->latest('updated_at')->paginate(15);
         return view('notes.index')->with('notes', $notes);
     }
@@ -51,10 +49,8 @@ class NoteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request, Note $note)
+    public function show(Note $note)
     {
-        // $request = Gate::inspect('view-note', $note);
-
         return view('notes.show')->with([
             'note' => $note,
             'response'=> Gate::inspect('view-note', $note)

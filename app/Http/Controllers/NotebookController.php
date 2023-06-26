@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Note;
 use App\Models\Notebook;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +23,8 @@ class NotebookController extends Controller
      */
     public function create()
     {
-        //
+        $notes = Note::whereBelongsTo(Auth::user())->latest('updated_at')->paginate(15);
+        return view('notebooks.create')->with('notes', $notes);
     }
 
     /**
@@ -30,7 +32,7 @@ class NotebookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**
