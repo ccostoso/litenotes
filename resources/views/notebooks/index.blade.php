@@ -20,7 +20,7 @@
                 <div class="my-6 p-6 bg-white border-b border-gray-200 shadow-sm sm:rounded-lg">
                     <h2 class="font-bold text-2xl">
                         <a 
-                        @if(request()->routeIs('notes.index'))
+                        @if(request()->routeIs('notebooks.index'))
                         href="{{ route('notebooks.show', $notebook) }}"
                         @else
                         href="{{ route('trashed.show', $notebook) }}"

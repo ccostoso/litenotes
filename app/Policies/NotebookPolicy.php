@@ -2,9 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\Notebook;
 use App\Models\User;
+use App\Models\Notebook;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Auth;
 
 class NotebookPolicy
 {
@@ -13,15 +14,21 @@ class NotebookPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->id > 0;
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Notebook $notebook): bool
+    public function view(User $user, Notebook $notebook): Response
     {
-        //
+        // dump($user);
+
+        return $notebook->user->is(Auth::user()) || $notebook->is_public
+        // $user->id === $notebook->user_id
+            ? Response::allow()
+            : Response::denyAsNotFound('User note not found.');
+            // : abort(403);
     }
 
     /**
@@ -29,7 +36,7 @@ class NotebookPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->id > 0;
     }
 
     /**

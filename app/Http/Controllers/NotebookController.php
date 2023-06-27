@@ -7,6 +7,7 @@ use App\Models\Notebook;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class NotebookController extends Controller
 {
@@ -36,7 +37,8 @@ class NotebookController extends Controller
         Auth::user()->notebooks()->create([
             'uuid' => Str::uuid(),
             'title' => $request->title,
-            'description' => $request->description
+            'description' => $request->description,
+            'is_public' => false
         ])->notes()->attach($request->in_notebook);
 
         return to_route('notebooks.index');
@@ -45,9 +47,17 @@ class NotebookController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Notebook $notebook)
     {
-        //
+        // $notes = Note::where('user_id', Auth::user()->id)->whereHas('notebooks')->where('notebook')->get();
+        $notes = $notebook->notes()->get();
+        // dd($notes);
+
+        return view('notebooks.show')->with([
+            'notebook' => $notebook,
+            'notes' => $notes,
+            'response'=> Gate::inspect('view-notebook', $notebook)
+        ]);
     }
 
     /**

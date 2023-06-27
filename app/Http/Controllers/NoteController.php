@@ -40,7 +40,8 @@ class NoteController extends Controller
         Auth::user()->notes()->create([
             'uuid' => Str::uuid(),
             'title' => $request->title,
-            'text' => $request->text
+            'text' => $request->text,
+            'is_public' => false,
         ]);
 
         return to_route('notes.index');
